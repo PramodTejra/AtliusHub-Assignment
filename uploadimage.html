@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        small {
+            color: red;
+            display: block;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3 ease;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+    <div class = "upload-cont">
+    <h2>Uplaod an Image</h2>
+    <form id="UploadForm" enctype="multipart/form-data" method="POST" onsubmit="return validateFile()">
+        <input type="file" id="fileInput" name = "file" accept="/image" required>
+        <small id=""fileError></small>
+        <button type="submit">Uplaod</button>
+    </form>
+</div>
+
+    <script>
+        function validateFile() {
+            const fileInput = document.getElementById('fileInput');
+            const fileError = document.getElementById('fileError');
+            const file = fileInput.file[0];
+
+            if(file) {
+                const maxSize = 2*1024*1024;
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];\
+
+                if(!allowedTypes.includes(file.type)){
+                    fileError.textContent = "Only JPEG, PNG AND GIF format are allowed"
+                    return false;
+                }
+
+                if(file.size > maxSize) {
+                    fileError.textContent = "File size muct be less than 2MB";
+                    return false;
+                }
+
+                fileError.textContent ="";
+                return true;
+            }
+
+            else {
+                fileError.textContent = "Please select a file";
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

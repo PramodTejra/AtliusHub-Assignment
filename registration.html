@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px;
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        } 
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background-color: #45a045;
+        }
+
+        small {
+            color: red;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" onsubmit="return validateEmail">
+        <h2>Register</h2>
+
+        <label for="email">Email:</label>
+        <input type="email" id ="email" name="email" required oninput="validateEmail()">
+        <small id="emailError"></small>
+
+        <label for="username">Username:</label>
+        <input type="text" id ="username" name="username" required minlength="3" oninput="validateUsername()">
+        <small id="usernameError"></small>
+
+        <label for="password">Passwrod:</label>
+        <input type="password" id ="password" name="password" required minlength="8" oninput="validatePassword()">
+        <small id="passwordError"></small>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function validateEmail() {
+            const email = document.getElementById("email").value;
+            const emailError = document.getElementById("emailError");
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if(!emailPattern.test(email)) {
+                emailError.textContent = "Invalid email format";
+            }
+            else{
+                emailError.textContent = "";
+            }
+        }
+
+        function validateUsername() {
+            const username = document.getElementById("username").value;
+            const usernameError = document.getElementById("usernameError");
+            if(username.length < 3) {
+                usernameError.textContent = "Username too short";
+            }
+            else{
+                usernameError.textContent = "";
+            }
+        }
+
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+            const passwordError = document.getElementById("passwordError");
+            const passwordPaattern = /^(?=.[a-z])(?=.[A-Z])(?=.*\d.).{8,}$/;
+            if(!passwordPaattern.test(password)) {
+                passwordError.textContent = "weak Password";
+            }
+            else{
+                passwordError.textContent = "";
+            }
+        }
+        
+        function validateForm() {
+            validateEmail();
+            validateUsername();
+            validatePassword();
+            const emailError = document.getElementById("emailError").textContent;
+            const usernameError = document.getElementById("usernameError").textContent;
+            const passwordError = document.getElementById("passwordError").textContent;
+
+            if(emailError || usernameError ||passwordError){
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
